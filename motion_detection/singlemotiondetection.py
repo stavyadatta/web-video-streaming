@@ -35,5 +35,16 @@ class SingleMotionDetector:
             cnts = imutils.grab_contours(cnts)
             (minX, minY) = (np.inf, np.inf)
             (maxX, maxY) = (-np.inf, -np.inf)
+            
+            if len(cnts) == 0:
+                return None
+            
+            for c in cnts:
+                (x, y, w, h) = cv2.boundingRect(c)
+                (minX, minY) = (min(minX, x), min(minY, y))
+                (maxX, maxY) = (max(maxX, x + w), max(maxY, y + h))
+            
+            return (thresh, (minX, minY, maxX, maxY))
+        
                 
         
